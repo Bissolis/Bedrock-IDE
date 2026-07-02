@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Minecraft";
+  src: url("./assets/fonts/Minecraft.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Minefactory";
+  src: url("./assets/fonts/Minercraftory.ttf") format("truetype");
+}
+
+@theme{
+  --font-Minecraft: "Minecraft", sans serif;
+  --font-Minefactory: "Minefactory", sans serif;
+}
+
+body, html, #root{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
