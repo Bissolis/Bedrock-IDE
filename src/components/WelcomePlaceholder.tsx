@@ -13,6 +13,8 @@ import gift3 from '../assets/images/promo_gift_small_pink.png'
 import gift4 from '../assets/images/promo_gift_small_yellow.png'
 import { openUrl } from "@tauri-apps/plugin-opener";
 
+import { invoke } from "@tauri-apps/api/core";
+
 const Images = [gift1, gift2, gift3, gift4];
 
 export default function WelcomePlaceholder(){
@@ -27,15 +29,34 @@ export default function WelcomePlaceholder(){
     return () => clearInterval(interval);
   }, []);
 
+  const [theme, setTheme] = useState("");
+
+    function getTheme(){
+
+        useEffect(() => {
+            async function ThemeValue() {
+                const Value = await invoke<string>("get_theme")
+                setTheme(Value)
+            }
+
+            ThemeValue();
+        }, [])
+
+        return theme;
+    }
+
+    getTheme()
+
+    const themebg = theme === "dark" ? "bg-zinc-950" : "bg-zinc-50";
   return(
-      <div className="row-start-1 col-start-1 row-span-32 col-span-2 bg-zinc-950 rounded-[0_20px_20px_0] grid grid-cols-32 grid-rows-32">
+      <div className={`row-start-1 col-start-1 row-span-32 col-span-2 ${themebg} grid grid-cols-32 grid-rows-32`}>
         <button className="row-start-1 col-start-5 col-span-20 row-span-2 flex items-center justify-center mt-1 cursor-pointer" onClick={OpenGithub}><img src={Bedrock} alt="Go to IDE" className="w-12"/></button>
-        <Link to="/ide" className="row-start-8 col-start-5 col-span-20 row-span-2 flex items-center justify-center mt-10"><img src={Book} alt="Go to IDE" className="w-12"/></Link>
-        <Link to="/ide" className="row-start-11 col-start-5 col-span-20 row-span-2 flex items-center justify-center"><img src={CommandBlock} alt="Go to IDE" className="w-12"/></Link>
-        <Link to="/ide" className="row-start-13 col-start-5 col-span-20 row-span-2 flex items-center justify-center mt-10"><img src={ShulkerBox} alt="Go to IDE" className="w-12"/></Link>
-        <Link to="/ide" className="row-start-16 col-start-5 col-span-20 row-span-2 flex items-center justify-center"><img src={RecipeBook} alt="Go to IDE" className="w-12"/></Link>
-        <Link to="/ide" className="row-start-28 col-start-5 col-span-20 row-span-2 flex items-center justify-center"><img src={Images[Color]} alt="Go to IDE" className="w-12"/></Link>
-        <Link to="/ide" className="row-start-30 col-start-5 col-span-20 row-span-2 flex items-center justify-center mt-7"><img src={Settings} alt="Go to IDE" className="w-12"/></Link>
+        <Link to="/" className="row-start-8 col-start-5 col-span-20 row-span-2 flex items-center justify-center mt-10"><img src={Book} alt="Go to IDE" className="w-12"/></Link>
+        <Link to="shulker" className="row-start-11 col-start-5 col-span-20 row-span-2 flex items-center justify-center"><img src={CommandBlock} alt="Go to IDE" className="w-12"/></Link>
+        <Link to="shulker" className="row-start-13 col-start-5 col-span-20 row-span-2 flex items-center justify-center mt-10"><img src={ShulkerBox} alt="Go to IDE" className="w-12"/></Link>
+        <Link to="shulker" className="row-start-16 col-start-5 col-span-20 row-span-2 flex items-center justify-center"><img src={RecipeBook} alt="Go to IDE" className="w-12"/></Link>
+        <Link to="shulker" className="row-start-28 col-start-5 col-span-20 row-span-2 flex items-center justify-center"><img src={Images[Color]} alt="Go to IDE" className="w-12"/></Link>
+        <Link to="config" className="row-start-30 col-start-5 col-span-20 row-span-2 flex items-center justify-center mt-7"><img src={Settings} alt="Go to IDE" className="w-12"/></Link>
       </div>
   );
 }
